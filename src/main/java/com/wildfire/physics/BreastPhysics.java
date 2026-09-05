@@ -1,7 +1,7 @@
 package com.wildfire.physics;
 
 import com.wildfire.api.IGenderArmor;
-import com.wildfire.main.config.GenderConfig;
+import com.wildfire.main.config.Configuration;
 import com.wildfire.main.WildfireHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -53,7 +53,7 @@ public class BreastPhysics {
 
     private void simplifiedTick(IGenderArmor armor, boolean armorPhysicsOverride) {
 
-        GenderConfig.PlayerGenderSettings s = null;
+        Configuration.PlayerGenderSettings s = null;
 
         if (armorPhysicsOverride) {
             this.preBreastSize = this.breastSize;
@@ -77,9 +77,9 @@ public class BreastPhysics {
             } catch (Throwable ignored) {}
 
             boolean armorPhysicsOverride = false;
-            GenderConfig.PlayerGenderSettings settings = null;
+            Configuration.PlayerGenderSettings settings = null;
             if (entity instanceof EntityPlayer) {
-                settings = GenderConfig.getPlayerSettings((EntityPlayer) entity);
+                settings = Configuration.getPlayerSettings((EntityPlayer) entity);
                 if (settings != null) armorPhysicsOverride = settings.overrideArmorPhysics;
             }
 
@@ -196,7 +196,7 @@ public class BreastPhysics {
 
             boolean isUniboob = false;
             if (entity instanceof EntityPlayer) {
-                GenderConfig.PlayerGenderSettings s = GenderConfig.getPlayerSettings((EntityPlayer) entity);
+                Configuration.PlayerGenderSettings s = Configuration.getPlayerSettings((EntityPlayer) entity);
                 if (s != null) isUniboob = s.breastsUniboob;
             }
             randomB = isUniboob ? 1 : (random.nextBoolean() ? -1 : 1);
@@ -302,7 +302,7 @@ public class BreastPhysics {
 
             boolean isUniboob = false;
             if (entity instanceof EntityPlayer) {
-                GenderConfig.PlayerGenderSettings s = GenderConfig.getPlayerSettings((EntityPlayer) entity);
+                Configuration.PlayerGenderSettings s = Configuration.getPlayerSettings((EntityPlayer) entity);
                 if (s != null) isUniboob = s.breastsUniboob;
             }
 

@@ -2,7 +2,7 @@ package com.wildfire.gui;
 
 import com.wildfire.main.contributors.Contributors;
 import com.wildfire.main.contributors.Contributor;
-import com.wildfire.main.config.GenderConfig;
+import com.wildfire.main.config.Configuration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -49,7 +49,7 @@ public final class SyncedPlayerList {
 
             String gender = "Unknown";
             try {
-                GenderConfig.PlayerGenderSettings settings = GenderConfig.getPlayerSettings(p);
+                Configuration.PlayerGenderSettings settings = Configuration.getPlayerSettings(p);
                 if (settings != null) {
                     gender = settings.gender;
                 }

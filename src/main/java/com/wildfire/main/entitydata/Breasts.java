@@ -1,7 +1,7 @@
 package com.wildfire.main.entitydata;
 
 import net.minecraft.entity.player.EntityPlayer;
-import com.wildfire.main.config.GenderConfig;
+import com.wildfire.main.config.Configuration;
 
 public class Breasts {
     private final EntityPlayer player;
@@ -21,14 +21,14 @@ public class Breasts {
 
     public float getXOffset() {
         EntityPlayer p = requirePlayer();
-        return GenderConfig.getPlayerSettings(p).breastsOffsetX;
+        return Configuration.getPlayerSettings(p).breastsOffsetX;
     }
 
     public boolean updateXOffset(float value) {
         EntityPlayer p = requirePlayer();
         if (validateOffset(value)) {
-            GenderConfig.getPlayerSettings(p).breastsOffsetX = value;
-            GenderConfig.saveConfig();
+            Configuration.getPlayerSettings(p).breastsOffsetX = value;
+            Configuration.saveConfig();
             return true;
         }
         return false;
@@ -36,14 +36,14 @@ public class Breasts {
 
     public float getYOffset() {
         EntityPlayer p = requirePlayer();
-        return GenderConfig.getPlayerSettings(p).breastsOffsetY;
+        return Configuration.getPlayerSettings(p).breastsOffsetY;
     }
 
     public boolean updateYOffset(float value) {
         EntityPlayer p = requirePlayer();
         if (validateOffset(value)) {
-            GenderConfig.getPlayerSettings(p).breastsOffsetY = value;
-            GenderConfig.saveConfig();
+            Configuration.getPlayerSettings(p).breastsOffsetY = value;
+            Configuration.saveConfig();
             return true;
         }
         return false;
@@ -51,14 +51,14 @@ public class Breasts {
 
     public float getZOffset() {
         EntityPlayer p = requirePlayer();
-        return GenderConfig.getPlayerSettings(p).breastsOffsetZ;
+        return Configuration.getPlayerSettings(p).breastsOffsetZ;
     }
 
     public boolean updateZOffset(float value) {
         EntityPlayer p = requirePlayer();
         if (validateOffset(value)) {
-            GenderConfig.getPlayerSettings(p).breastsOffsetZ = value;
-            GenderConfig.saveConfig();
+            Configuration.getPlayerSettings(p).breastsOffsetZ = value;
+            Configuration.saveConfig();
             return true;
         }
         return false;
@@ -66,14 +66,14 @@ public class Breasts {
 
     public float getCleavage() {
         EntityPlayer p = requirePlayer();
-        return GenderConfig.getPlayerSettings(p).breastsCleavage;
+        return Configuration.getPlayerSettings(p).breastsCleavage;
     }
 
     public boolean updateCleavage(float value) {
         EntityPlayer p = requirePlayer();
         if (validateCleavage(value)) {
-            GenderConfig.getPlayerSettings(p).breastsCleavage = value;
-            GenderConfig.saveConfig();
+            Configuration.getPlayerSettings(p).breastsCleavage = value;
+            Configuration.saveConfig();
             return true;
         }
         return false;
@@ -81,13 +81,13 @@ public class Breasts {
 
     public boolean isUniboob() {
         EntityPlayer p = requirePlayer();
-        return GenderConfig.getPlayerSettings(p).breastsUniboob;
+        return Configuration.getPlayerSettings(p).breastsUniboob;
     }
 
     public boolean updateUniboob(boolean value) {
         EntityPlayer p = requirePlayer();
-        GenderConfig.getPlayerSettings(p).breastsUniboob = value;
-        GenderConfig.saveConfig();
+        Configuration.getPlayerSettings(p).breastsUniboob = value;
+        Configuration.saveConfig();
         return true;
     }
 

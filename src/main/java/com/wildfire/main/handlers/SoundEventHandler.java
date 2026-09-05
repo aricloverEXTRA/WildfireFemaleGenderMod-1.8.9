@@ -1,6 +1,6 @@
 package com.wildfire.main.handlers;
 
-import com.wildfire.main.config.GenderConfig;
+import com.wildfire.main.config.Configuration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.entity.player.EntityPlayer;
@@ -34,7 +34,7 @@ public class SoundEventHandler {
             Minecraft mc = Minecraft.getMinecraft();
             if (mc == null || mc.thePlayer == null) return;
             EntityPlayer player = mc.thePlayer;
-            GenderConfig.PlayerGenderSettings settings = GenderConfig.getPlayerSettings(player);
+            Configuration.PlayerGenderSettings settings = Configuration.getPlayerSettings(player);
             if (settings == null || !settings.hurtSoundsEnabled) return;
             if ("Male".equals(settings.gender)) return;
 

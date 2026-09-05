@@ -1,10 +1,9 @@
 package com.wildfire.main;
 
-import com.wildfire.gui.screen.GuiWardrobe;
-import com.wildfire.main.config.GenderConfig;
+import com.wildfire.gui.screen.WardrobeBrowserScreen;
+import com.wildfire.main.config.Configuration;
 import com.wildfire.physics.BreastPhysics;
-import com.wildfire.render.armor.EmptyGenderArmor;
-import com.wildfire.render.armor.SimpleGenderArmor;
+import com.wildfire.render.GenderLayer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.entity.EntityLivingBase;
@@ -32,17 +31,17 @@ public class WildfireEventHandler {
 
             if (!player.worldObj.isRemote) return;
 
-            GenderConfig.PlayerGenderSettings settings = null;
+            Configuration.PlayerGenderSettings settings = null;
             boolean isLocal = player == minecraft.thePlayer;
             if (isLocal) {
-                settings = GenderConfig.getPlayerSettings(player);
+                settings = Configuration.getPlayerSettings(player);
                 if (settings == null) return;
                 if (!(player instanceof AbstractClientPlayer)) return;
             } else {
 
                 if (!(player instanceof AbstractClientPlayer)) return;
 
-                settings = GenderConfig.getPlayerSettings(minecraft.thePlayer);
+                settings = Configuration.getPlayerSettings(minecraft.thePlayer);
                 if (settings == null) return;
             }
 
@@ -56,19 +55,33 @@ public class WildfireEventHandler {
 
             com.wildfire.api.IGenderArmor armor;
             if (chest == null || !(chest.getItem() instanceof ItemArmor)) {
-                armor = EmptyGenderArmor.INSTANCE;
+                armor = new com.wildfire.api.IGenderArmor() {};
             } else if (chest.getItem() == net.minecraft.init.Items.leather_chestplate) {
-                armor = SimpleGenderArmor.LEATHER;
+                armor = new com.wildfire.api.IGenderArmor() {
+                    @Override public float physicsResistance() { return 0.3f; }
+                    @Override public float tightness() { return 0.5f; }
+                };
             } else if (chest.getItem() == net.minecraft.init.Items.chainmail_chestplate) {
-                armor = SimpleGenderArmor.CHAINMAIL;
+                armor = new com.wildfire.api.IGenderArmor() {
+                    @Override public float physicsResistance() { return 0.5f; }
+                    @Override public float tightness() { return 0.2f; }
+                };
             } else if (chest.getItem() == net.minecraft.init.Items.golden_chestplate) {
-                armor = SimpleGenderArmor.GOLD;
+                armor = new com.wildfire.api.IGenderArmor() {
+                    @Override public float physicsResistance() { return 0.85f; }
+                };
             } else if (chest.getItem() == net.minecraft.init.Items.iron_chestplate) {
-                armor = SimpleGenderArmor.IRON;
+                armor = new com.wildfire.api.IGenderArmor() {
+                    @Override public float physicsResistance() { return 1.0f; }
+                };
             } else if (chest.getItem() == net.minecraft.init.Items.diamond_chestplate) {
-                armor = SimpleGenderArmor.DIAMOND;
+                armor = new com.wildfire.api.IGenderArmor() {
+                    @Override public float physicsResistance() { return 1.0f; }
+                };
             } else {
-                armor = SimpleGenderArmor.FALLBACK;
+                armor = new com.wildfire.api.IGenderArmor() {
+                    @Override public float physicsResistance() { return 0.5f; }
+                };
             }
 
             boolean physicsEnabled = isLocal ? settings.physicsEnabled : true;

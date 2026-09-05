@@ -4,8 +4,6 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.wildfire.api.IGenderArmor;
-import com.wildfire.render.armor.EmptyGenderArmor;
-import com.wildfire.render.armor.SimpleGenderArmor;
 import com.wildfire.main.uvs.UVLayout;
 import com.wildfire.physics.BreastPhysics;
 import net.minecraft.entity.EntityLivingBase;
@@ -202,20 +200,34 @@ public class EntityConfig {
 
         IGenderArmor armor;
         if (chest == null || chest.getItem() == null) {
-            armor = EmptyGenderArmor.INSTANCE;
+            armor = new com.wildfire.api.IGenderArmor() {};
         } else {
             if (chest.getItem() == Items.leather_chestplate) {
-                armor = SimpleGenderArmor.LEATHER;
+                armor = new com.wildfire.api.IGenderArmor() {
+                    @Override public float physicsResistance() { return 0.3f; }
+                    @Override public float tightness() { return 0.5f; }
+                };
             } else if (chest.getItem() == Items.chainmail_chestplate) {
-                armor = SimpleGenderArmor.CHAINMAIL;
+                armor = new com.wildfire.api.IGenderArmor() {
+                    @Override public float physicsResistance() { return 0.5f; }
+                    @Override public float tightness() { return 0.2f; }
+                };
             } else if (chest.getItem() == Items.golden_chestplate) {
-                armor = SimpleGenderArmor.GOLD;
+                armor = new com.wildfire.api.IGenderArmor() {
+                    @Override public float physicsResistance() { return 0.85f; }
+                };
             } else if (chest.getItem() == Items.iron_chestplate) {
-                armor = SimpleGenderArmor.IRON;
+                armor = new com.wildfire.api.IGenderArmor() {
+                    @Override public float physicsResistance() { return 1.0f; }
+                };
             } else if (chest.getItem() == Items.diamond_chestplate) {
-                armor = SimpleGenderArmor.DIAMOND;
+                armor = new com.wildfire.api.IGenderArmor() {
+                    @Override public float physicsResistance() { return 1.0f; }
+                };
             } else {
-                armor = SimpleGenderArmor.FALLBACK;
+                armor = new com.wildfire.api.IGenderArmor() {
+                    @Override public float physicsResistance() { return 0.5f; }
+                };
             }
         }
 

@@ -1,0 +1,28 @@
+package com.wildfire.main;
+
+import com.wildfire.main.config.Configuration;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraft.client.settings.KeyBinding;
+import org.lwjgl.input.Keyboard;
+
+@Mod(modid = WildfireGender.MODID, version = WildfireGender.VERSION)
+public class WildfireGender {
+    public static final String MODID = "femalegendermodlegacyforge";
+    public static final String VERSION = "5.0.0-Beta.4";
+
+    public static KeyBinding openGuiKey;
+    public static KeyBinding toggleBreastsKey;
+
+    @Mod.EventHandler
+    public void preInit(FMLPreInitializationEvent event) {
+        Configuration.loadConfig(event);
+    }
+
+    @Mod.EventHandler
+    public void init(FMLInitializationEvent event) {
+        openGuiKey = new KeyBinding("key.wildfire_gender.gender_menu", Keyboard.KEY_G, "Female Gender Mod");
+        toggleBreastsKey = new KeyBinding("key.wildfire_gender.toggle", 0, "Female Gender Mod");
+    }
+}

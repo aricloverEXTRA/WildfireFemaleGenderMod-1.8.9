@@ -1,6 +1,6 @@
 package com.wildfire.main;
 
-import com.wildfire.main.config.GenderConfig;
+import com.wildfire.main.config.Configuration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.resources.IResource;
@@ -18,7 +18,7 @@ public class WildfireSounds {
     private static final String SOUND_KEY1 = "female_damage";
     private static final String SOUND_KEY2 = "female_damage2";
     private static final String[] TRY_DOMAINS = new String[] {
-            WildfireGenderMod.MODID,
+            WildfireGender.MODID,
             "wildfire_gender"
     };
 
@@ -26,7 +26,7 @@ public class WildfireSounds {
     private static final long SUPPRESSION_TIME_MS = 100L;
 
     public static void preInit(FMLPreInitializationEvent event) {
-        System.out.println("[WFG] WildfireSounds.preInit: modid=" + WildfireGenderMod.MODID);
+        System.out.println("[WFG] WildfireSounds.preInit: modid=" + WildfireGender.MODID);
     }
 
     @SubscribeEvent
@@ -35,7 +35,7 @@ public class WildfireSounds {
         EntityPlayer player = (EntityPlayer) event.entityLiving;
         if (!player.worldObj.isRemote) return;
 
-        GenderConfig.PlayerGenderSettings settings = GenderConfig.getPlayerSettings(player);
+        Configuration.PlayerGenderSettings settings = Configuration.getPlayerSettings(player);
         if (settings == null || !settings.hurtSoundsEnabled || settings.voicePitch <= 0) return;
         if ("Male".equals(settings.gender)) return;
 
@@ -52,7 +52,7 @@ public class WildfireSounds {
         if (!event.player.worldObj.isRemote) return;
 
         EntityPlayer player = event.player;
-        GenderConfig.PlayerGenderSettings settings = GenderConfig.getPlayerSettings(player);
+        Configuration.PlayerGenderSettings settings = Configuration.getPlayerSettings(player);
         if (settings == null || !settings.hurtSoundsEnabled || settings.voicePitch <= 0) return;
 
         if (player.hurtResistantTime == 0) {
@@ -63,13 +63,13 @@ public class WildfireSounds {
 
     public static void playSoundForPlayer(EntityPlayer player) {
         if (!player.worldObj.isRemote) return;
-        GenderConfig.PlayerGenderSettings settings = GenderConfig.getPlayerSettings(player);
+        Configuration.PlayerGenderSettings settings = Configuration.getPlayerSettings(player);
         if (settings != null && settings.hurtSoundsEnabled && settings.voicePitch > 0) {
             playFemaleHurt(player, settings);
         }
     }
 
-    private static void playFemaleHurt(EntityPlayer player, GenderConfig.PlayerGenderSettings settings) {
+    private static void playFemaleHurt(EntityPlayer player, Configuration.PlayerGenderSettings settings) {
         String playerName = player.getName();
         long currentTime = System.currentTimeMillis();
         long lastPlayed = lastPlayedPerPlayer.getOrDefault(playerName, 0L);

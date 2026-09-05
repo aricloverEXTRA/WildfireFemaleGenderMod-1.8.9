@@ -1,14 +1,15 @@
 package com.wildfire.gui.screen;
 
 import com.wildfire.gui.FakeGUIPlayer;
-import com.wildfire.gui.GuiUtils;
 import com.wildfire.gui.WildfireButton;
 import com.wildfire.main.contributors.Contributor;
 import com.wildfire.main.contributors.Contributors;
-import com.wildfire.main.config.GenderConfig;
+import com.wildfire.main.config.Configuration;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
@@ -150,7 +151,7 @@ public class WildfireCreditsScreen extends GuiScreen {
 
         switch (button.id) {
             case 0:
-                this.mc.displayGuiScreen(new GuiWardrobe());
+                this.mc.displayGuiScreen(new WardrobeBrowserScreen());
                 return;
             case 1:
                 if (creditsPage > 0) creditsPage--;
@@ -192,7 +193,7 @@ public class WildfireCreditsScreen extends GuiScreen {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         drawDefaultBackground();
 
-        boolean isDarkMode = mc.thePlayer != null && GenderConfig.getDarkMode(mc.thePlayer);
+        boolean isDarkMode = mc.thePlayer != null && Configuration.getDarkMode(mc.thePlayer);
 
         ResourceLocation btnContainer = isDarkMode ? DARK_BUTTON_CONTAINER : BUTTON_CONTAINER;
         ResourceLocation tabContainer = isDarkMode ? DARK_TAB_CONTAINER : TAB_CONTAINER;
@@ -278,7 +279,7 @@ public class WildfireCreditsScreen extends GuiScreen {
 
             AbstractClientPlayer entity = fp.getEntity();
 
-            GuiUtils.drawEntityOnScreenNoScissor(
+WardrobeBrowserScreen.drawEntityOnScreenNoScissor(
                     this,
                     drawCenterX,
                     drawCenterY,
@@ -353,6 +354,38 @@ public class WildfireCreditsScreen extends GuiScreen {
             this.itemRender.zLevel = 0.0F;
             GL11.glPopMatrix();
         }
+    }
+
+    private void drawEntityOnScreenNoScissor(GuiScreen gui, int x, int y, int scale, int mouseX, int mouseY, AbstractClientPlayer entity) {
+        GlStateManager.enableColorMaterial();
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(x, y, 50.0F);
+        GlStateManager.scale(-scale, scale, scale);
+        GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
+        float f = entity.renderYawOffset;
+        float f1 = entity.rotationYaw;
+        float f2 = entity.rotationPitch;
+        float f3 = entity.prevRotationYawHead;
+        float f4 = entity.rotationYawHead;
+        entity.renderYawOffset = 0.0F;
+        entity.rotationYaw = 0.0F;
+        entity.rotationPitch = 0.0F;
+        entity.prevRotationYawHead = entity.rotationYawHead;
+        entity.rotationYawHead = entity.rotationYawHead;
+        GlStateManager.rotate(135.0F, 0.0F, 1.0F, 0.0F);
+        RenderManager rendermanager = net.minecraft.client.Minecraft.getMinecraft().getRenderManager();
+        rendermanager.setPlayerViewY(180.0F);
+        rendermanager.setRenderShadow(false);
+        rendermanager.doRenderEntity(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, false);
+        rendermanager.setRenderShadow(true);
+        entity.renderYawOffset = f;
+        entity.rotationYaw = f1;
+        entity.rotationPitch = f2;
+        entity.prevRotationYawHead = f3;
+        entity.rotationYawHead = f4;
+        GlStateManager.popMatrix();
+        GlStateManager.disableRescaleNormal();
+        GlStateManager.disableColorMaterial();
     }
 
     @Override
