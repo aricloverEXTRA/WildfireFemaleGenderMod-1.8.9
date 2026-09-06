@@ -1,7 +1,9 @@
 package com.wildfire.main;
 
 import com.wildfire.main.config.Configuration;
+import com.wildfire.main.proxy.CommonProxy;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraft.client.settings.KeyBinding;
@@ -11,6 +13,9 @@ import org.lwjgl.input.Keyboard;
 public class WildfireGender {
     public static final String MODID = "femalegendermodlegacyforge";
     public static final String VERSION = "5.0.0-Beta.4";
+
+    @SidedProxy(clientSide = "com.wildfire.main.proxy.ClientProxy", serverSide = "com.wildfire.main.proxy.CommonProxy")
+    public static CommonProxy proxy;
 
     public static KeyBinding openGuiKey;
     public static KeyBinding toggleBreastsKey;
@@ -24,6 +29,6 @@ public class WildfireGender {
     public void init(FMLInitializationEvent event) {
         openGuiKey = new KeyBinding("key.wildfire_gender.gender_menu", Keyboard.KEY_G, "Female Gender Mod");
         toggleBreastsKey = new KeyBinding("key.wildfire_gender.toggle", 0, "Female Gender Mod");
-        net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new WildfireEventHandler());
+        proxy.init(event);
     }
 }
