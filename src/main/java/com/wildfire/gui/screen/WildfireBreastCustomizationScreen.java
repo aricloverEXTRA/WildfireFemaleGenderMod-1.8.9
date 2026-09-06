@@ -93,7 +93,7 @@ public class WildfireBreastCustomizationScreen extends GuiScreen implements GuiS
         this.depthSlider = new GuiSlider(2, sliderX, sliderY + spacing * 2 - 2, smallSliderWidth, sliderHeight,
                 prefixFromKey("wildfire_gender.wardrobe.slider.depth"), "", -10.0D, 0.0D, Math.max(-10.0, Math.min(0.0, this.settings.breastsOffsetZ)), false, true, this);
         this.rotationSlider = new GuiSlider(4, sliderX + smallSliderWidth + 3 + 1, sliderY + spacing * 2 - 2, smallSliderWidth, sliderHeight,
-                prefixFromKey("wildfire_gender.wardrobe.slider.rotation"), "Â°", 0.0D, 10.0D, this.settings.breastsCleavage * 100f, false, true, this);
+                prefixFromKey("wildfire_gender.wardrobe.slider.rotation"), "\u00B0", 0.0D, 10.0D, this.settings.breastsCleavage * 100f, false, true, this);
         this.intensitySlider = new GuiSlider(7, sliderX, sliderY + spacing * 2 - 2, smallSliderWidth, sliderHeight,
                 prefixFromKey("wildfire_gender.slider.bounce"), "%", 0.0D, 150.0D, this.settings.intensity, false, true, this);
         this.momentumSlider = new GuiSlider(8, sliderX + smallSliderWidth + horizontalSpacing, sliderY + spacing * 2 - 2, smallSliderWidth, sliderHeight,
@@ -378,18 +378,38 @@ public class WildfireBreastCustomizationScreen extends GuiScreen implements GuiS
         this.mc.getTextureManager().bindTexture(tabTexture);
         drawModalRectWithCustomSizedTexture(guiLeft + 94, guiTop + 26, 0, 0, guiWidth, guiHeight, 512, 512);
 
-        super.drawScreen(mouseX, mouseY, partialTicks);
-
         for (GuiButton button : this.buttonList) {
+            if (button instanceof net.minecraftforge.fml.client.config.GuiSlider) {
+                net.minecraftforge.fml.client.config.GuiSlider slider = (net.minecraftforge.fml.client.config.GuiSlider) button;
+                if (slider.id == 1 || slider.id == 8) {
+                    String txt = slider.displayString;
+                    int w = this.fontRendererObj.getStringWidth(txt);
+                    int maxW = slider.width - 8;
+                    if (w > maxW) {
+                        float scale = (float) maxW / w;
+                        int cx = slider.xPosition + slider.width / 2;
+                        int cy = slider.yPosition + (slider.height - 8) / 2 + 4;
+                        GlStateManager.pushMatrix();
+                        GlStateManager.translate(cx, cy, 0);
+                        GlStateManager.scale(scale, scale, 1);
+                        GlStateManager.translate(-cx, -cy, 0);
+                        slider.drawButton(this.mc, mouseX, mouseY);
+                        GlStateManager.popMatrix();
+                        continue;
+                    }
+                }
+            }
             if (button instanceof WildfireButton) {
                 WildfireButton wildfireButton = (WildfireButton) button;
                 if (!wildfireButton.enabled && (wildfireButton.id == 11 || wildfireButton.id == 12 || wildfireButton.id == 13)) {
                     GlStateManager.color(0.5F, 0.5F, 0.5F, 1.0F);
                     wildfireButton.drawButton(this.mc, mouseX, mouseY);
                     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+                    continue;
                 }
             }
         }
+        super.drawScreen(mouseX, mouseY, partialTicks);
 
         int posX = guiLeft + 50;
         int posY = guiTop + 135;
