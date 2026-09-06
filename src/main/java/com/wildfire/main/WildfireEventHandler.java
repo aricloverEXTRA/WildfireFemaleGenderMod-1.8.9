@@ -3,7 +3,8 @@ package com.wildfire.main;
 import com.wildfire.gui.screen.WardrobeBrowserScreen;
 import com.wildfire.main.config.Configuration;
 import com.wildfire.physics.BreastPhysics;
-import com.wildfire.render.GenderLayer;
+import com.wildfire.render.armor.EmptyGenderArmor;
+import com.wildfire.render.armor.SimpleGenderArmor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.entity.EntityLivingBase;
@@ -46,8 +47,8 @@ public class WildfireEventHandler {
             }
 
             AbstractClientPlayer acp = (AbstractClientPlayer) player;
-            GenderLayer.ensureRegisteredForPlayer(acp);
-            BreastPhysics[] phys = GenderLayer.getPhysicsForPlayer(acp);
+            com.wildfire.render.GenderLayer.ensureRegisteredForPlayer(acp);
+            BreastPhysics[] phys = com.wildfire.render.GenderLayer.getPhysicsForPlayer(acp);
             if (phys == null) return;
 
             ItemStack chest = null;
@@ -55,33 +56,19 @@ public class WildfireEventHandler {
 
             com.wildfire.api.IGenderArmor armor;
             if (chest == null || !(chest.getItem() instanceof ItemArmor)) {
-                armor = new com.wildfire.api.IGenderArmor() {};
+                armor = EmptyGenderArmor.INSTANCE;
             } else if (chest.getItem() == net.minecraft.init.Items.leather_chestplate) {
-                armor = new com.wildfire.api.IGenderArmor() {
-                    @Override public float physicsResistance() { return 0.3f; }
-                    @Override public float tightness() { return 0.5f; }
-                };
+                armor = SimpleGenderArmor.LEATHER;
             } else if (chest.getItem() == net.minecraft.init.Items.chainmail_chestplate) {
-                armor = new com.wildfire.api.IGenderArmor() {
-                    @Override public float physicsResistance() { return 0.5f; }
-                    @Override public float tightness() { return 0.2f; }
-                };
+                armor = SimpleGenderArmor.CHAINMAIL;
             } else if (chest.getItem() == net.minecraft.init.Items.golden_chestplate) {
-                armor = new com.wildfire.api.IGenderArmor() {
-                    @Override public float physicsResistance() { return 0.85f; }
-                };
+                armor = SimpleGenderArmor.GOLD;
             } else if (chest.getItem() == net.minecraft.init.Items.iron_chestplate) {
-                armor = new com.wildfire.api.IGenderArmor() {
-                    @Override public float physicsResistance() { return 1.0f; }
-                };
+                armor = SimpleGenderArmor.IRON;
             } else if (chest.getItem() == net.minecraft.init.Items.diamond_chestplate) {
-                armor = new com.wildfire.api.IGenderArmor() {
-                    @Override public float physicsResistance() { return 1.0f; }
-                };
+                armor = SimpleGenderArmor.DIAMOND;
             } else {
-                armor = new com.wildfire.api.IGenderArmor() {
-                    @Override public float physicsResistance() { return 0.5f; }
-                };
+                armor = SimpleGenderArmor.FALLBACK;
             }
 
             boolean physicsEnabled = isLocal ? settings.physicsEnabled : true;
@@ -117,7 +104,7 @@ public class WildfireEventHandler {
     public void onPlayerLoggedOut(PlayerLoggedOutEvent event) {
         try {
             if (event.player != null) {
-                GenderLayer.unregister(event.player.getUniqueID());
+                com.wildfire.render.GenderLayer.unregister(event.player.getUniqueID());
             }
         } catch (Throwable ignored) {}
     }

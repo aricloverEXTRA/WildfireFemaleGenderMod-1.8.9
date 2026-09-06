@@ -2,12 +2,12 @@ package com.wildfire.gui.screen;
 
 import com.wildfire.main.config.Configuration;
 import com.wildfire.gui.WildfireButton;
+import com.wildfire.gui.GuiUtils;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.StatCollector;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -139,7 +139,7 @@ public class WardrobeBrowserScreen extends GuiScreen {
         int scissorHeight = 88 * this.mc.displayHeight / this.height;
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
         GL11.glScissor(scissorX, scissorY, scissorWidth, scissorHeight);
-        WardrobeBrowserScreen.drawEntityOnScreenNoScissor(this, posX, posY, 60, mouseX - posX, mouseY - posY, entity);
+        GuiUtils.drawEntityOnScreenNoScissor(this, posX, posY, 60, mouseX - posX, mouseY - posY, entity);
 
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
 
@@ -196,37 +196,5 @@ public class WardrobeBrowserScreen extends GuiScreen {
     @Override
     public boolean doesGuiPauseGame() {
         return false;
-    }
-
-    public static void drawEntityOnScreenNoScissor(GuiScreen gui, int x, int y, int scale, int mouseX, int mouseY, EntityLivingBase entity) {
-        GlStateManager.enableColorMaterial();
-        GlStateManager.pushMatrix();
-        GlStateManager.translate(x, y, 50.0F);
-        GlStateManager.scale(-scale, scale, scale);
-        GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
-        float f = entity.renderYawOffset;
-        float f1 = entity.rotationYaw;
-        float f2 = entity.rotationPitch;
-        float f3 = entity.prevRotationYawHead;
-        float f4 = entity.rotationYawHead;
-        entity.renderYawOffset = 0.0F;
-        entity.rotationYaw = 0.0F;
-        entity.rotationPitch = 0.0F;
-        entity.prevRotationYawHead = entity.rotationYawHead;
-        entity.rotationYawHead = entity.rotationYawHead;
-        GlStateManager.rotate(135.0F, 0.0F, 1.0F, 0.0F);
-        RenderManager rendermanager = net.minecraft.client.Minecraft.getMinecraft().getRenderManager();
-        rendermanager.setPlayerViewY(180.0F);
-        rendermanager.setRenderShadow(false);
-        rendermanager.doRenderEntity(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, false);
-        rendermanager.setRenderShadow(true);
-        entity.renderYawOffset = f;
-        entity.rotationYaw = f1;
-        entity.rotationPitch = f2;
-        entity.prevRotationYawHead = f3;
-        entity.rotationYawHead = f4;
-        GlStateManager.popMatrix();
-        GlStateManager.disableRescaleNormal();
-        GlStateManager.disableColorMaterial();
     }
 }

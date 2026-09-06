@@ -44,7 +44,7 @@ public class Configuration {
     }
 
     public static void loadConfig(FMLPreInitializationEvent event) {
-        File configFile = new File(event.getModConfigurationDirectory(), "genderConfig.cfg");
+        File configFile = new File(event.getModConfigurationDirectory(), "Configuration.cfg");
         forgeConfig = new net.minecraftforge.common.config.Configuration(configFile);
 
         try {
@@ -61,7 +61,7 @@ public class Configuration {
             localPlayerSettings.separation = forgeConfig.getFloat("Separation", "General", 0.0F, -10.0F, 10.0F, "Separation (-10 to 10)");
             localPlayerSettings.depth = forgeConfig.getFloat("Depth", "General", 0.0F, -10.0F, 0.0F, "Depth (0 to -10, inward push)");
             localPlayerSettings.height = forgeConfig.getFloat("Height", "General", 0.0F, -10.0F, 10.0F, "Height (-10 to 10)");
-            localPlayerSettings.rotation = forgeConfig.getFloat("Rotation", "General", 0.0F, 0.0F, 10.0F, "Rotation (0-10°)");
+            localPlayerSettings.rotation = forgeConfig.getFloat("Rotation", "General", 0.0F, 0.0F, 10.0F, "Rotation (0-10)");
             localPlayerSettings.breastsOffsetX = forgeConfig.getFloat("BreastsOffsetX", "General", 0.0F, -10.0F, 10.0F, "Default X offset");
             localPlayerSettings.breastsOffsetY = forgeConfig.getFloat("BreastsOffsetY", "General", 0.0F, -10.0F, 10.0F, "Default Y offset");
             localPlayerSettings.breastsOffsetZ = forgeConfig.getFloat("BreastsOffsetZ", "General", 0.0F, -10.0F, 10.0F, "Default Z offset");

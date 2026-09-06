@@ -1,7 +1,6 @@
 package com.wildfire.main;
 
 import com.wildfire.main.config.Configuration;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -25,6 +24,6 @@ public class WildfireGender {
     public void init(FMLInitializationEvent event) {
         openGuiKey = new KeyBinding("key.wildfire_gender.gender_menu", Keyboard.KEY_G, "Female Gender Mod");
         toggleBreastsKey = new KeyBinding("key.wildfire_gender.toggle", 0, "Female Gender Mod");
-        MinecraftForge.EVENT_BUS.register(new WildfireEventHandler());
+        net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(new WildfireEventHandler());
     }
 }

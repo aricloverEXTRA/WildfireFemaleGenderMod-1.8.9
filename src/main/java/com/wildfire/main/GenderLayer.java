@@ -1,4 +1,4 @@
-package com.wildfire.render;
+package com.wildfire.main;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -11,8 +11,6 @@ import com.wildfire.main.uvs.UVDirection;
 import com.wildfire.main.uvs.UVLayout;
 import com.wildfire.main.uvs.UVQuad;
 import com.wildfire.main.uvs.UVStorage;
-import com.wildfire.main.ArmorTextureHelper;
-import com.wildfire.main.WildfireHelper;
 import com.wildfire.physics.BreastPhysics;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBiped;
@@ -168,7 +166,7 @@ public class GenderLayer implements LayerRenderer<AbstractClientPlayer> {
                                   boolean isUniboob, float ageInTicks, float renderScale) {
         GlStateManager.pushMatrix();
         try {
-            float sep = isLeft ? breastOffsetX * 0.0625f : -breastOffsetX * 0.0625f;
+            float sep = isLeft ? breastOffsetX * 0.25f : -breastOffsetX * 0.25f;
             GlStateManager.translate(sep, 0.05625f + (breastOffsetY * 0.0625f), zOffset - 0.0625f * 2f + (breastOffsetZ * 0.0425f));
             if (!isUniboob) GlStateManager.translate(isLeft ? -0.125f : 0.125f, 0, 0);
             if (bounceEnabled) {

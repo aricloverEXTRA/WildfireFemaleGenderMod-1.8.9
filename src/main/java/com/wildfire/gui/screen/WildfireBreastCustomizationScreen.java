@@ -1,5 +1,6 @@
 package com.wildfire.gui.screen;
 
+import com.wildfire.gui.GuiUtils;
 import com.wildfire.gui.WildfireButton;
 import com.wildfire.main.config.Configuration;
 import net.minecraft.client.gui.GuiButton;
@@ -92,7 +93,7 @@ public class WildfireBreastCustomizationScreen extends GuiScreen implements GuiS
         this.depthSlider = new GuiSlider(2, sliderX, sliderY + spacing * 2 - 2, smallSliderWidth, sliderHeight,
                 prefixFromKey("wildfire_gender.wardrobe.slider.depth"), "", -10.0D, 0.0D, Math.max(-10.0, Math.min(0.0, this.settings.breastsOffsetZ)), false, true, this);
         this.rotationSlider = new GuiSlider(4, sliderX + smallSliderWidth + 3 + 1, sliderY + spacing * 2 - 2, smallSliderWidth, sliderHeight,
-                prefixFromKey("wildfire_gender.wardrobe.slider.rotation"), "°", 0.0D, 10.0D, this.settings.breastsCleavage * 100f, false, true, this);
+                prefixFromKey("wildfire_gender.wardrobe.slider.rotation"), "Â°", 0.0D, 10.0D, this.settings.breastsCleavage * 100f, false, true, this);
         this.intensitySlider = new GuiSlider(7, sliderX, sliderY + spacing * 2 - 2, smallSliderWidth, sliderHeight,
                 prefixFromKey("wildfire_gender.slider.bounce"), "%", 0.0D, 150.0D, this.settings.intensity, false, true, this);
         this.momentumSlider = new GuiSlider(8, sliderX + smallSliderWidth + horizontalSpacing, sliderY + spacing * 2 - 2, smallSliderWidth, sliderHeight,
@@ -398,7 +399,7 @@ public class WildfireBreastCustomizationScreen extends GuiScreen implements GuiS
         int scissorHeight = 88 * this.mc.displayHeight / this.height;
         org.lwjgl.opengl.GL11.glEnable(org.lwjgl.opengl.GL11.GL_SCISSOR_TEST);
         org.lwjgl.opengl.GL11.glScissor(scissorX, scissorY, scissorWidth, scissorHeight);
-        WardrobeBrowserScreen.drawEntityOnScreenNoScissor(this, posX, posY, 60, mouseX - posX, mouseY - posY, this.mc.thePlayer);
+        GuiUtils.drawEntityOnScreenNoScissor(this, posX, posY, 60, mouseX - posX, mouseY - posY, this.mc.thePlayer);
         org.lwjgl.opengl.GL11.glDisable(org.lwjgl.opengl.GL11.GL_SCISSOR_TEST);
 
         this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("wildfire_gender.appearance_settings.title"), this.width / 2, guiTop - 15, 0xFFFFFF);

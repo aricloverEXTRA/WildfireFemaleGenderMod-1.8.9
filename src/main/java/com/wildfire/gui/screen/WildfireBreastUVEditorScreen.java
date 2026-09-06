@@ -1,6 +1,7 @@
 package com.wildfire.gui.screen;
 
 import com.wildfire.gui.WildfireButton;
+import com.wildfire.main.ArmorTextureHelper;
 import com.wildfire.main.config.Configuration;
 import com.wildfire.main.uvs.BreastTypes;
 import com.wildfire.main.uvs.UVDirection;
@@ -11,8 +12,6 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 
@@ -108,16 +107,9 @@ public class WildfireBreastUVEditorScreen extends GuiScreen {
         try {
             if (this.mc.thePlayer != null) texture = this.mc.thePlayer.getLocationSkin();
             if (this.selectedBreastIndex.name().contains("OVERLAY")) {
-                ItemStack chest = null;
-                try {
-                    if (this.mc.thePlayer != null) chest = this.mc.thePlayer.inventory.armorInventory[2];
-                } catch (Throwable ignored) {}
-                if (chest != null && chest.getItem() instanceof ItemArmor) {
-                    ItemArmor ia = (ItemArmor) chest.getItem();
-                    String texPath = ia.getArmorTexture(chest, this.mc.thePlayer, 2, "overlay");
-                    if (texPath == null) texPath = ia.getArmorTexture(chest, this.mc.thePlayer, 2, null);
-                    if (texPath != null) texture = new ResourceLocation(texPath);
-                }
+                ResourceLocation armor = ArmorTextureHelper.getArmorTextureForPlayerUUID(this.playerUuid, true);
+                if (armor == null) armor = ArmorTextureHelper.getArmorTextureForPlayerUUID(this.playerUuid, false);
+                if (armor != null) texture = armor;
             }
         } catch (Throwable ignored) {}
         if (texture != null) {

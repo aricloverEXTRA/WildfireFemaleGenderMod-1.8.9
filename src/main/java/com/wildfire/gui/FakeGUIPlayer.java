@@ -48,7 +48,7 @@ public class FakeGUIPlayer {
                     "wildfire_gender",
                     "textures/credit_skins/" + uuid.toString() + ".png"
             );
-            entity = new EntityOtherPlayerMP(world, profile);
+            entity = new EntityCreditsPlayer(world, profile, localSkin);
             entity.getEntityData().setBoolean("WFG_FakeGUIPlayer", true);
             entity.setCustomNameTag("");
             entity.setAlwaysRenderNameTag(false);
