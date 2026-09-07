@@ -1,4 +1,4 @@
-package com.wildfire.main;
+﻿package com.wildfire.main;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -202,10 +202,20 @@ public class GenderLayer implements LayerRenderer<AbstractClientPlayer> {
             }
             GlStateManager.scale(0.9995f, 1f, 1f);
             float boxX = isLeft ? -4f : 0f;
-            renderBox(player, baseUV, boxX, 0f, 0f, 4, 5, 3, 0f, false, renderScale, isChestplate && armor != null && armor.coversBreasts(), chest, isLeft);
-            GlStateManager.translate(0, 0, -0.015f);
-            GlStateManager.scale(1.05f, 1.05f, 1.05f);
-            renderBox(player, overlayUV, boxX, 0f, 0f, 4, 5, 3, 0f, true, renderScale, false, null, isLeft);
+            boolean useArmorTex = isChestplate && armor != null && armor.coversBreasts();
+            renderBox(player, baseUV, boxX, 0f, 0f, 4, 5, 3, 0f, false, renderScale, useArmorTex, chest, isLeft);
+            if (useArmorTex) {
+                ResourceLocation overlayArmor = ArmorTextureHelper.getArmorTextureForPlayer(player, true);
+                if (overlayArmor != null) {
+                    GlStateManager.translate(0, 0, -0.015f);
+                    GlStateManager.scale(1.05f, 1.05f, 1.05f);
+                    renderBox(player, overlayUV, boxX, 0f, 0f, 4, 5, 3, 0f, true, renderScale, true, chest, isLeft);
+                }
+            } else {
+                GlStateManager.translate(0, 0, -0.015f);
+                GlStateManager.scale(1.05f, 1.05f, 1.05f);
+                renderBox(player, overlayUV, boxX, 0f, 0f, 4, 5, 3, 0f, true, renderScale, false, null, isLeft);
+            }
         } finally {
             GlStateManager.popMatrix();
         }
@@ -271,10 +281,7 @@ public class GenderLayer implements LayerRenderer<AbstractClientPlayer> {
         }
         ResourceLocation tex;
         boolean useArmorTex = false;
-        if (useArmor && armorTex != null) {
-            tex = armorTex;
-            useArmorTex = true;
-        } else if (hasChestplate && armorTex != null) {
+        if (hasChestplate && armorTex != null) {
             tex = armorTex;
             useArmorTex = true;
         } else if (isOverlay) {
