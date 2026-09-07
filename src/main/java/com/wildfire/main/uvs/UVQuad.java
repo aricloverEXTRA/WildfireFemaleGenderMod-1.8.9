@@ -1,5 +1,10 @@
 package com.wildfire.main.uvs;
 
+import com.google.common.base.Preconditions;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class UVQuad {
     private final int x1;
     private final int y1;
@@ -13,36 +18,39 @@ public class UVQuad {
         this.y2 = y2;
     }
 
-    public int x1() {
-        return x1;
-    }
-
-    public int y1() {
-        return y1;
-    }
-
-    public int x2() {
-        return x2;
-    }
-
-    public int y2() {
-        return y2;
-    }
+    public int x1() { return x1; }
+    public int y1() { return y1; }
+    public int x2() { return x2; }
+    public int y2() { return y2; }
 
     public UVQuad addX1(int delta) {
-        return new UVQuad(x1 + delta, y1, x2, y2);
-    }
-
-    public UVQuad addX2(int delta) {
-        return new UVQuad(x1, y1, x2 + delta, y2);
+        return new UVQuad(this.x1 + delta, y1, x2, y2);
     }
 
     public UVQuad addY1(int delta) {
-        return new UVQuad(x1, y1 + delta, x2, y2);
+        return new UVQuad(x1, this.y1 + delta, x2, y2);
+    }
+
+    public UVQuad addX2(int delta) {
+        return new UVQuad(x1, y1, this.x2 + delta, y2);
     }
 
     public UVQuad addY2(int delta) {
-        return new UVQuad(x1, y1, x2, y2 + delta);
+        return new UVQuad(x1, y1, x2, this.y2 + delta);
+    }
+
+    public List<Integer> toIntList() {
+        List<Integer> list = new ArrayList<Integer>(4);
+        list.add(x1);
+        list.add(y1);
+        list.add(x2);
+        list.add(y2);
+        return list;
+    }
+
+    public static UVQuad fromIntList(List<Integer> list) {
+        Preconditions.checkArgument(list.size() == 4, "Expected exactly 4 integer elements, got %s instead", list.size());
+        return new UVQuad(list.get(0), list.get(1), list.get(2), list.get(3));
     }
 
     @Override

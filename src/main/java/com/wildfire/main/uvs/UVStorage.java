@@ -5,13 +5,14 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class UVStorage {
-    private static final Map<UUID, Map<BreastTypes, UVLayout>> userLayouts = new HashMap<UUID, Map<BreastTypes, UVLayout>>();
+    private static final Map<UUID, Map<BreastTypes, UVLayout>> userLayouts = new HashMap<>();
 
     private static final LoadingCache<String, ResourceLocation> textureCache = CacheBuilder.newBuilder()
             .expireAfterAccess(10, TimeUnit.MINUTES)
@@ -39,7 +40,7 @@ public class UVStorage {
     }
 
     private static Map<BreastTypes, UVLayout> createDefaultBundle() {
-        Map<BreastTypes, UVLayout> bundle = new HashMap<BreastTypes, UVLayout>();
+        Map<BreastTypes, UVLayout> bundle = new HashMap<>();
         for (BreastTypes type : BreastTypes.values()) {
             bundle.put(type, new UVLayout(type));
         }
@@ -68,6 +69,7 @@ public class UVStorage {
         }
     }
 
+    @Nullable
     public static ResourceLocation getBreastTexture(UUID uuid, boolean overlay) {
         if (uuid == null) {
             return null;

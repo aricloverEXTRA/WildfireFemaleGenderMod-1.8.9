@@ -1,5 +1,6 @@
 package com.wildfire.gui.screen;
 
+import com.wildfire.gui.GuiUtils;
 import com.wildfire.gui.WildfireButton;
 import com.wildfire.main.ArmorTextureHelper;
 import com.wildfire.main.config.Configuration;
@@ -184,9 +185,9 @@ public class WildfireBreastUVEditorScreen extends GuiScreen {
 
         if (mouseX >= x1 && mouseX <= x2 && mouseY >= y1 && mouseY <= y2) {
             this.drawHoveringText(Arrays.asList(
-                "§e" + direction.name() + " §7(" + direction.getDirectionText(this.selectedBreastIndex) + ")",
-                "§bX:" + quad.x1() + " Y:" + quad.y1() + " -> " + quad.x2() + "," + quad.y2(),
-                "§7Click to select"), mouseX, mouseY);
+                "\u00A7e" + direction.name() + " \u00A77(" + direction.getDirectionText(this.selectedBreastIndex) + ")",
+                "\u00A7bX:" + quad.x1() + " Y:" + quad.y1() + " -> " + quad.x2() + "," + quad.y2(),
+                "\u00A77Click to select"), mouseX, mouseY);
         }
     }
 
@@ -196,20 +197,20 @@ public class WildfireBreastUVEditorScreen extends GuiScreen {
         if (this.selectedUVs != null) {
             int y = 85;
             if (this.selectedDirection == null) {
-                this.fontRendererObj.drawString("§7Click a face on texture", x, y, COLOR_WHITE);
-                this.fontRendererObj.drawString("§7to edit UVs", x, y+10, COLOR_WHITE);
+                this.fontRendererObj.drawString("\u00A77Click a face on texture", x, y, COLOR_WHITE);
+                this.fontRendererObj.drawString("\u00A77to edit UVs", x, y+10, COLOR_WHITE);
             } else {
                 this.fontRendererObj.drawString("Face: " + this.selectedDirection.name(), x, 80, COLOR_YELLOW);
-                this.fontRendererObj.drawString("§7" + this.selectedDirection.getDirectionText(this.selectedBreastIndex), x, 90, COLOR_WHITE);
+                this.fontRendererObj.drawString("\u00A77" + this.selectedDirection.getDirectionText(this.selectedBreastIndex), x, 90, COLOR_WHITE);
                 String[] labels = { "Move X", "Move Y", "Width", "Height" };
                 for (int i = 0; i < labels.length; i++) {
                     this.fontRendererObj.drawString(labels[i], x, 103 + (i * 18), COLOR_WHITE);
                 }
                 UVQuad q = this.selectedUVs.get(this.selectedDirection);
                 if (q != null) {
-                    this.fontRendererObj.drawString(String.format("§7[%d,%d %dx%d]", q.x1(), q.y1(), q.x2()-q.x1()+1, q.y2()-q.y1()+1), x, 175, COLOR_CYAN);
+                    this.fontRendererObj.drawString(String.format("\u00A77[%d,%d %dx%d]", q.x1(), q.y1(), q.x2()-q.x1()+1, q.y2()-q.y1()+1), x, 175, COLOR_CYAN);
                 }
-                this.fontRendererObj.drawString("§7Shift: x10  Ctrl+Shift: x20", x, 185, 0xFFAAAAAA);
+                this.fontRendererObj.drawString("\u00A77Shift: x10  Ctrl+Shift: x20", x, 185, 0xFFAAAAAA);
             }
         }
     }
