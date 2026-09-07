@@ -205,15 +205,21 @@ public class GenderLayer implements LayerRenderer<AbstractClientPlayer> {
             GlStateManager.scale(0.9995f, 1f, 1f);
             float boxX = isLeft ? -4f : 0f;
             boolean useArmorTex = isChestplate && armor != null && armor.coversBreasts();
-            renderBox(player, baseUV, boxX, 0f, 0f, 4, 5, 3, 0f, false, renderScale, useArmorTex, chest, isLeft);
             if (useArmorTex) {
+                ResourceLocation baseArmor = ArmorTextureHelper.getArmorTextureForPlayer(player, false);
+                if (baseArmor != null) {
+                    renderBox(player, baseUV, boxX, 0f, 0f, 4, 5, 3, 0f, false, renderScale, true, chest, isLeft);
+                } else {
+                    renderBox(player, baseUV, boxX, 0f, 0f, 4, 5, 3, 0f, false, renderScale, false, chest, isLeft);
+                }
                 ResourceLocation overlayArmor = ArmorTextureHelper.getArmorTextureForPlayer(player, true);
-                if (overlayArmor != null) {
+                if (overlayArmor != null && !overlayArmor.equals(baseArmor)) {
                     GlStateManager.translate(0, 0, -0.015f);
                     GlStateManager.scale(1.05f, 1.05f, 1.05f);
                     renderBox(player, overlayUV, boxX, 0f, 0f, 4, 5, 3, 0f, true, renderScale, true, chest, isLeft);
                 }
             } else {
+                renderBox(player, baseUV, boxX, 0f, 0f, 4, 5, 3, 0f, false, renderScale, false, chest, isLeft);
                 GlStateManager.translate(0, 0, -0.015f);
                 GlStateManager.scale(1.05f, 1.05f, 1.05f);
                 renderBox(player, overlayUV, boxX, 0f, 0f, 4, 5, 3, 0f, true, renderScale, false, null, isLeft);
@@ -275,7 +281,12 @@ public class GenderLayer implements LayerRenderer<AbstractClientPlayer> {
         try { hideInArmor = Configuration.getHideInArmor((EntityPlayer) player); } catch (Throwable ignored) {}
         boolean isFake = false;
         try { isFake = player.getEntityData().getBoolean("WFG_FakeGUIPlayer"); } catch (Throwable ignored) {}
-        if (!isFake && hasChestplate && hideInArmor) return;
+        boolean coversBreasts = false;
+        try {
+            ItemStack c = ((EntityPlayer) player).inventory.armorInventory[2];
+            if (c != null && c.getItem() instanceof ItemArmor) coversBreasts = getArmorForStack(c).coversBreasts();
+        } catch (Throwable ignored) {}
+        if (!isFake && hasChestplate && hideInArmor && coversBreasts) return;
         ResourceLocation armorTex = null;
         if (hasChestplate) {
             armorTex = ArmorTextureHelper.getArmorTextureForPlayer(player, isOverlay);
@@ -283,9 +294,13 @@ public class GenderLayer implements LayerRenderer<AbstractClientPlayer> {
         }
         ResourceLocation tex;
         boolean useArmorTex = false;
-        if (hasChestplate && armorTex != null) {
-            tex = armorTex;
-            useArmorTex = true;
+        boolean coversForTex = false;
+        try {
+            ItemStack c2 = ((EntityPlayer) player).inventory.armorInventory[2];
+            if (c2 != null && c2.getItem() instanceof ItemArmor) coversForTex = getArmorForStack(c2).coversBreasts();
+        } catch (Throwable ignored) {}
+        if (hasChestplate && armorTex != null && coversForTex) {
+            tex = armorTex; useArmorTex = true;
         } else if (isOverlay) {
             tex = UVStorage.getBreastTexture(player.getUniqueID(), true);
             if (tex == null) tex = player.getLocationSkin();
@@ -377,21 +392,21 @@ public class GenderLayer implements LayerRenderer<AbstractClientPlayer> {
 
     private static int getArmorU(UVDirection dir, boolean isLeft, boolean isMin) {
         switch (dir) {
-            case NORTH: return isLeft ? (isMin ? 16 : 23) : (isMin ? 24 : 31);
-            case SOUTH: return isLeft ? (isMin ? 32 : 39) : (isMin ? 40 : 47);
-            case EAST: return isLeft ? (isMin ? 48 : 55) : (isMin ? 48 : 55);
-            case WEST: return isLeft ? (isMin ? 56 : 63) : (isMin ? 56 : 63);
-            case UP: return isLeft ? (isMin ? 16 : 23) : (isMin ? 24 : 31);
-            case DOWN: return isLeft ? (isMin ? 16 : 23) : (isMin ? 24 : 31);
+            case NORTH: return isLeft ? (isMin ? 20 : 24) : (isMin ? 24 : 28);
+            case SOUTH: return isLeft ? (isMin ? 20 : 24) : (isMin ? 24 : 28);
+            case EAST: return isLeft ? (isMin ? 24 : 28) : (isMin ? 28 : 32);
+            case WEST: return isLeft ? (isMin ? 16 : 20) : (isMin ? 20 : 24);
+            case UP: return isLeft ? (isMin ? 20 : 24) : (isMin ? 24 : 28);
+            case DOWN: return isLeft ? (isMin ? 20 : 24) : (isMin ? 24 : 28);
         }
         return 0;
     }
 
     private static int getArmorV(UVDirection dir, boolean isMin) {
         switch (dir) {
-            case NORTH: case SOUTH: case EAST: case WEST: return isMin ? 16 : 22;
-            case UP: return isMin ? 16 : 22;
-            case DOWN: return isMin ? 16 : 22;
+            case NORTH: case SOUTH: case EAST: case WEST: return isMin ? 21 : 26;
+            case UP: return isMin ? 25 : 27;
+            case DOWN: return isMin ? 17 : 21;
         }
         return 0;
     }
