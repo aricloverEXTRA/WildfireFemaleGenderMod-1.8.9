@@ -53,10 +53,6 @@ repositories {
 
     // If you don't want to log in with your real minecraft account, remove this line
     maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
-
-    // PolyPatcher (optional recommended dependency for visual bug fixes)
-    // Note: May require the correct classifier for 1.8.9 (e.g., "1.8.9-forge")
-    maven("https://repo.polyfrost.org/releases")
 }
 
 val shadowImpl: Configuration by configurations.creating {
