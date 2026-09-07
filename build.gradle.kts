@@ -53,6 +53,10 @@ repositories {
 
     // If you don't want to log in with your real minecraft account, remove this line
     maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
+
+    // PolyPatcher (optional recommended dependency for visual bug fixes)
+    // Note: May require the correct classifier for 1.8.9 (e.g., "1.8.9-forge")
+    maven("https://repo.polyfrost.org/releases")
 }
 
 val shadowImpl: Configuration by configurations.creating {
@@ -67,6 +71,12 @@ dependencies {
     // If you don't want to log in with your real minecraft account, remove this line
     runtimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.2.1")
 
+    // PolyPatcher - optional recommended dependency for visual bug fixes
+    // Users don't need it, but it's recommended for fixing rendering issues
+    // Uncomment if available on Maven with correct classifier:
+    // runtimeOnly("club.sk1er:patcher:1.10.3:1.8.9-forge") {
+    //     isTransitive = false
+    // }
 }
 
 // Tasks:
