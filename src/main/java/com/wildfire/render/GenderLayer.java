@@ -205,6 +205,10 @@ public class GenderLayer implements LayerRenderer<AbstractClientPlayer> {
             GlStateManager.scale(0.9995f, 1f, 1f);
             float boxX = isLeft ? -4f : 0f;
             boolean useArmorTex = isChestplate && armor != null && armor.coversBreasts();
+            
+            GlStateManager.enablePolygonOffset();
+            GlStateManager.doPolygonOffset(1.0f, 1.0f);
+            
             if (useArmorTex) {
                 ResourceLocation baseArmor = ArmorTextureHelper.getArmorTextureForPlayer(player, false);
                 if (baseArmor != null) {
@@ -224,6 +228,8 @@ public class GenderLayer implements LayerRenderer<AbstractClientPlayer> {
                 GlStateManager.scale(1.05f, 1.05f, 1.05f);
                 renderBox(player, overlayUV, boxX, 0f, 0f, 4, 5, 3, 0f, true, renderScale, false, null, isLeft);
             }
+            
+            GlStateManager.disablePolygonOffset();
         } finally {
             GlStateManager.popMatrix();
         }
