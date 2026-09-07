@@ -1,10 +1,10 @@
 [
   {
-    "modid": "femalegendermodlegacyforge",
+    "modid": "${modid}",
     "name": "Female Gender Mod (Legacy)",
     "description": "Allows players to choose what gender they want to be.\n\nRecommended: PolyPatcher (fixes visual bugs & improves rendering)",
-    "version": "5.0.0-Beta.4",
-    "mcversion": "1.8.9",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
     "url": "",
     "updateUrl": "",
     "authorList": ["WildfireRomeo", "celeste", "pupnewfster", "Aric3435"],
