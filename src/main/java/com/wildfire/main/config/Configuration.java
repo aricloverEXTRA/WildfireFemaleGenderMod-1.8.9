@@ -44,7 +44,7 @@ public class Configuration {
     }
 
     public static void loadConfig(FMLPreInitializationEvent event) {
-        File configFile = new File(event.getModConfigurationDirectory(), "Configuration.cfg");
+        File configFile = new File(event.getModConfigurationDirectory(), "FemaleGenderMod.cfg");
         forgeConfig = new net.minecraftforge.common.config.Configuration(configFile);
 
         try {

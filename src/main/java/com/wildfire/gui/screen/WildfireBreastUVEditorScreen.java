@@ -192,25 +192,25 @@ public class WildfireBreastUVEditorScreen extends GuiScreen {
     }
 
     private void drawRightEditorPanel(int x) {
-        this.fontRendererObj.drawString("Type: " + this.selectedBreastIndex.name(), x, 25, COLOR_WHITE, false);
+        this.fontRendererObj.drawString("Type: " + this.selectedBreastIndex.name(), x, 25, COLOR_WHITE);
 
         if (this.selectedUVs != null) {
             int y = 85;
             if (this.selectedDirection == null) {
-                this.fontRendererObj.drawString("\u00A77Click a face on texture", x, y, COLOR_WHITE, false);
-                this.fontRendererObj.drawString("\u00A77to edit UVs", x, y+10, COLOR_WHITE, false);
+                this.fontRendererObj.drawString("\u00A77Click a face on texture", x, y, COLOR_WHITE);
+                this.fontRendererObj.drawString("\u00A77to edit UVs", x, y+10, COLOR_WHITE);
             } else {
-                this.fontRendererObj.drawString("Face: " + this.selectedDirection.name(), x, 80, COLOR_YELLOW, false);
-                this.fontRendererObj.drawString("\u00A77" + this.selectedDirection.getDirectionText(this.selectedBreastIndex), x, 90, COLOR_WHITE, false);
+                this.fontRendererObj.drawString("Face: " + this.selectedDirection.name(), x, 80, COLOR_YELLOW);
+                this.fontRendererObj.drawString("\u00A77" + this.selectedDirection.getDirectionText(this.selectedBreastIndex), x, 90, COLOR_WHITE);
                 String[] labels = { "Move X", "Move Y", "Width", "Height" };
                 for (int i = 0; i < labels.length; i++) {
-                    this.fontRendererObj.drawString(labels[i], x, 103 + (i * 18), COLOR_WHITE, false);
+                    this.fontRendererObj.drawString(labels[i], x, 103 + (i * 18), COLOR_WHITE);
                 }
                 UVQuad q = this.selectedUVs.get(this.selectedDirection);
                 if (q != null) {
-                    this.fontRendererObj.drawString(String.format("\u00A77[%d,%d %dx%d]", q.x1(), q.y1(), q.x2()-q.x1()+1, q.y2()-q.y1()+1), x, 175, COLOR_CYAN, false);
+                    this.fontRendererObj.drawString(String.format("\u00A77[%d,%d %dx%d]", q.x1(), q.y1(), q.x2()-q.x1()+1, q.y2()-q.y1()+1), x, 175, COLOR_CYAN);
                 }
-                this.fontRendererObj.drawString("\u00A77Shift: x10  Ctrl+Shift: x20", x, 185, 0xFFAAAAAA, false);
+                this.fontRendererObj.drawString("\u00A77Shift: x10  Ctrl+Shift: x20", x, 185, 0xFFAAAAAA);
             }
         }
     }

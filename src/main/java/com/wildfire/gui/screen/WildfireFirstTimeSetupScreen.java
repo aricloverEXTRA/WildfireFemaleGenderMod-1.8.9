@@ -47,8 +47,8 @@ public class WildfireFirstTimeSetupScreen extends GuiScreen {
 
         String title = "Welcome to Female Gender Mod!";
         String info = "Click anywhere to customize your character's gender and appearance.";
-        this.drawCenteredString(this.fontRendererObj, title, guiLeft + guiWidth / 2, guiTop + 50, 0xFFFFFF, false);
-        this.drawCenteredString(this.fontRendererObj, info, guiLeft + guiWidth / 2, guiTop + 80, 0xAAAAAA, false);
+        this.drawCenteredString(this.fontRendererObj, title, guiLeft + guiWidth / 2, guiTop + 50, 0xFFFFFF);
+        this.drawCenteredString(this.fontRendererObj, info, guiLeft + guiWidth / 2, guiTop + 80, 0xAAAAAA);
 
         GlStateManager.enableLighting();
         GlStateManager.enableDepth();

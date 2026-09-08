@@ -203,11 +203,11 @@ public class WildfireCreditsScreen extends GuiScreen {
 
         drawCenteredString(fontRendererObj,
                 StatCollector.translateToLocal("wildfire_gender.credits.title"),
-                width / 2, height / 2 - 100, 0xFFFFFF, false);
+                width / 2, height / 2 - 100, 0xFFFFFF);
 
         drawCenteredString(fontRendererObj,
                 StatCollector.translateToLocal("wildfire_gender.credits.description"),
-                width / 2, height / 2 - 85, 0x888888, false);
+                width / 2, height / 2 - 85, 0x888888);
 
         mc.getTextureManager().bindTexture(btnContainer);
         drawModalRectWithCustomSizedTexture(width / 2 - 95, navigationY, 0, 0, 190, 25, 190, 25);
@@ -297,7 +297,7 @@ public class WildfireCreditsScreen extends GuiScreen {
             GL11.glTranslatef(nameDrawX, nameDrawY, 0f);
             GL11.glScalef(0.55f, 0.55f, 1.0f);
             GL11.glTranslatef(-nameDrawX, -nameDrawY, 0f);
-            drawCenteredString(this.fontRendererObj, fp.getName(), nameDrawX, nameDrawY + 7, 0xFFFFFF, false);
+            drawCenteredString(this.fontRendererObj, fp.getName(), nameDrawX, nameDrawY + 7, 0xFFFFFF);
             GL11.glPopMatrix();
 
             String name = fp.getName();

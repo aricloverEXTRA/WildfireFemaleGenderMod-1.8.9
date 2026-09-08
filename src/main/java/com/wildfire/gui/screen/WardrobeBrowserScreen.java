@@ -145,7 +145,7 @@ public class WardrobeBrowserScreen extends GuiScreen {
             String text = "\u00A7l" + StatCollector.translateToLocal("wildfire_gender.cancer_awareness.title");
             int textWidth = this.fontRendererObj.getStringWidth(text);
             int textX = this.width / 2 - 10;
-            this.drawCenteredString(this.fontRendererObj, text, textX, guiTop + guiHeight + 10, 0xFFFFFF, false);
+            this.drawCenteredString(this.fontRendererObj, text, textX, guiTop + guiHeight + 10, 0xFFFFFF);
 
             mc.getTextureManager().bindTexture(RIBBON_TEXTURE);
             int iconX = textX + (textWidth / 2) + 6;
