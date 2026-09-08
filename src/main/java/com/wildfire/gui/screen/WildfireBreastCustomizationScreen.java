@@ -71,7 +71,7 @@ public class WildfireBreastCustomizationScreen extends GuiScreen implements GuiS
         int guiWidth = 272;
         int guiHeight = 130;
         int guiLeft = (this.width - guiWidth) / 2;
-        int guiTop = (this.height - guiHeight) / 2;
+        int guiTop = (this.height - guiHeight) / 2 - 2;
 
         int tabContentLeft = guiLeft + 94;
         int tabContentTop = guiTop + 26;
@@ -142,7 +142,7 @@ public class WildfireBreastCustomizationScreen extends GuiScreen implements GuiS
                 Configuration.getHolidayThemes(this.mc.thePlayer) ? enabledText : disabledText
         ));
 
-        int editorY = sliderY + spacing * 2 + 20 + 8;
+        int editorY = sliderY + spacing * 2 + 20 + 8 + 2;
         this.breastTextureEditorButton = new WildfireButton(18, sliderX, editorY, 130, 15, StatCollector.translateToLocal("wildfire_gender.uv_editor"));
 
         WildfireButton customizationTab = new WildfireButton(11, guiLeft + 6, guiTop + 6, 84, 12, StatCollector.translateToLocal("wildfire_gender.breast_customization.tab_customization"));
@@ -411,8 +411,8 @@ public class WildfireBreastCustomizationScreen extends GuiScreen implements GuiS
         }
         super.drawScreen(mouseX, mouseY, partialTicks);
 
-        int posX = guiLeft + 50;
-        int posY = guiTop + 135;
+        int posX = this.width / 2 - 90;
+        int posY = this.height / 2 + 44;
         int scissorX = (posX - 38) * this.mc.displayWidth / this.width;
         int scissorY = this.mc.displayHeight - (posY + 24 - 48) * this.mc.displayHeight / this.height;
         int scissorWidth = 76 * this.mc.displayWidth / this.width;
@@ -421,8 +421,6 @@ public class WildfireBreastCustomizationScreen extends GuiScreen implements GuiS
         org.lwjgl.opengl.GL11.glScissor(scissorX, scissorY, scissorWidth, scissorHeight);
         GuiUtils.drawEntityOnScreenNoScissor(this, posX, posY, 60, mouseX - posX, mouseY - posY, this.mc.thePlayer);
         org.lwjgl.opengl.GL11.glDisable(org.lwjgl.opengl.GL11.GL_SCISSOR_TEST);
-
-        this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("wildfire_gender.appearance_settings.title"), this.width / 2, guiTop - 15, 0xFFFFFF);
 
         if (this.armorPhysicsButton != null && this.armorPhysicsButton.isMouseOver()) {
             drawHoveringText(Arrays.asList(StatCollector.translateToLocal("wildfire_gender.tooltip.override_armor_physics.line1")), mouseX, mouseY);
