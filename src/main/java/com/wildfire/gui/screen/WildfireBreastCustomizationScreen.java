@@ -360,7 +360,7 @@ public class WildfireBreastCustomizationScreen extends GuiScreen implements GuiS
         int guiWidth = 272;
         int guiHeight = 130;
         int guiLeft = (this.width - guiWidth) / 2;
-        int guiTop = (this.height - guiHeight) / 2;
+        int guiTop = (this.height - guiHeight) / 2 - 2;
         drawModalRectWithCustomSizedTexture(guiLeft + 0, guiTop + 0, 0, 0, guiWidth, guiHeight, 512, 512);
 
         ResourceLocation tabTexture;
@@ -410,11 +410,6 @@ public class WildfireBreastCustomizationScreen extends GuiScreen implements GuiS
             }
         }
         super.drawScreen(mouseX, mouseY, partialTicks);
-
-        int guiWidth = 272;
-        int guiHeight = 130;
-        int guiLeft = (this.width - guiWidth) / 2;
-        int guiTop = (this.height - guiHeight) / 2 - 2;
 
         int posX = guiLeft + 44;
         int posY = guiTop + 100;
