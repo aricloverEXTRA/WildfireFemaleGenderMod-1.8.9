@@ -10,6 +10,7 @@
     "authorList": ["WildfireRomeo", "celeste", "pupnewfster", "Aric3435"],
     "credits": "This is a Recreation of the Female Gender Mod in Minecraft 1.8.9 Forge. Contributors: Arcti_cc, BluelightAmelia, diademiemi, IzzyBizzy45, Kichura, PinguinLars, Powerless001, Crosby",
     "logoFile": "assets/wildfire_gender/icon.png",
-    "screenshots": []
+    "screenshots": [],
+    "dependencies": []
   }
 ]
