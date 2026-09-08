@@ -128,8 +128,6 @@ public class WardrobeBrowserScreen extends GuiScreen {
 
         super.drawScreen(mouseX, mouseY, partialTicks);
 
-        this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("wildfire_gender.wardrobe.title"), this.width / 2, guiTop - 15, 0xFFFFFF);
-
         EntityLivingBase entity = this.mc.thePlayer;
         int posX = guiLeft + 44;
         int posY = guiTop + 95;

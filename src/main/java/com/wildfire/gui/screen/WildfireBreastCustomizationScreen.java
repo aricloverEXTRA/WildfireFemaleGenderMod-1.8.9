@@ -71,7 +71,7 @@ public class WildfireBreastCustomizationScreen extends GuiScreen implements GuiS
         int guiWidth = 272;
         int guiHeight = 130;
         int guiLeft = (this.width - guiWidth) / 2;
-        int guiTop = (this.height - guiHeight) / 2 - 2;
+        int guiTop = (this.height - guiHeight) / 2 - 4;
 
         int tabContentLeft = guiLeft + 94;
         int tabContentTop = guiTop + 26;
@@ -143,7 +143,7 @@ public class WildfireBreastCustomizationScreen extends GuiScreen implements GuiS
         ));
 
         int editorY = sliderY + spacing * 2 + 20 + 8 + 2;
-        this.breastTextureEditorButton = new WildfireButton(18, sliderX, editorY, 130, 15, StatCollector.translateToLocal("wildfire_gender.uv_editor"));
+        this.breastTextureEditorButton = new WildfireButton(18, sliderX, editorY, 120, 15, StatCollector.translateToLocal("wildfire_gender.uv_editor"));
 
         WildfireButton customizationTab = new WildfireButton(11, guiLeft + 6, guiTop + 6, 84, 12, StatCollector.translateToLocal("wildfire_gender.breast_customization.tab_customization"));
         WildfireButton physicsTab = new WildfireButton(12, guiLeft + 94, guiTop + 6, 84, 12, StatCollector.translateToLocal("wildfire_gender.breast_customization.tab_physics"));
@@ -360,7 +360,7 @@ public class WildfireBreastCustomizationScreen extends GuiScreen implements GuiS
         int guiWidth = 272;
         int guiHeight = 130;
         int guiLeft = (this.width - guiWidth) / 2;
-        int guiTop = (this.height - guiHeight) / 2 - 2;
+        int guiTop = (this.height - guiHeight) / 2 - 4;
         drawModalRectWithCustomSizedTexture(guiLeft + 0, guiTop + 0, 0, 0, guiWidth, guiHeight, 512, 512);
 
         ResourceLocation tabTexture;
