@@ -161,12 +161,10 @@ public class WildfireBreastUVEditorScreen extends GuiScreen {
                 int modelScale = 120;
                 if (this.width < 1920) modelScale = 60;
                 else if (this.width >= 2560) modelScale = 200;
-                int left = this.width / 2 - modelScale;
-                int top = this.height / 2 - modelScale;
-                int right = this.width / 2 + modelScale;
-                int bottom = this.height / 2 + modelScale;
-                GuiInventory.drawEntityOnScreen(left, top, right, bottom, modelScale,
-                        (float) (this.width / 2 - mouseX), (float) (this.height / 2 - mouseY), this.mc.thePlayer);
+                int centerX = this.width / 2;
+                int centerY = this.height / 2;
+                GuiInventory.drawEntityOnScreen(centerX, centerY, modelScale,
+                        (float) (centerX - mouseX), (float) (centerY - mouseY), this.mc.thePlayer);
             }
             GlStateManager.enableBlend();
             GlStateManager.popMatrix();
