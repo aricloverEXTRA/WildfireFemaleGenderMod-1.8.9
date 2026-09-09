@@ -209,7 +209,7 @@ public class GenderLayer implements LayerRenderer<AbstractClientPlayer> {
             
             boolean showJacket = true;
             try {
-                showJacket = player.isWearing(EnumPlayerModelParts.JACKET);
+                showJacket = player.isWearing(net.minecraft.client.entity.AbstractClientPlayer.EnumPlayerModelParts.JACKET);
             } catch (Throwable ignored) {}
             
             GlStateManager.enablePolygonOffset();

@@ -22,6 +22,11 @@ public class WildfireCreditsScreen extends GuiScreen {
 
     private static final int BOXES_PER_PAGE = 12;
     private static final int COLUMNS = 6;
+    private static final int BOX_WIDTH = 52;
+    private static final int BOX_HEIGHT = 68;
+    private static final int H_SPACING = 8;
+    private static final int V_SPACING = 8;
+    private static final int PORTRAIT_PLAYER_DOWN_PX = 20;
 
     private static final ResourceLocation CREDIT_CONTAINER = new ResourceLocation("wildfire_gender:textures/gui/credits/credit_container.png");
     private static final ResourceLocation CREDIT_OUTLINE = new ResourceLocation("wildfire_gender:textures/gui/credits/credit_outline.png");
@@ -40,81 +45,39 @@ public class WildfireCreditsScreen extends GuiScreen {
     private WildfireButton btnBack, btnPrev, btnNext, btnGeneral, btnTranslators;
     private int navigationY;
 
-    private FakeGUIPlayer[] genPlayers = new FakeGUIPlayer[0];
-    private FakeGUIPlayer[] transPlayers = new FakeGUIPlayer[0];
-
-    private static final int PORTRAIT_PLAYER_DOWN_PX = 20;
-
-    private static final int BOX_WIDTH = 52;
-    private static final int BOX_HEIGHT = 68;
-    private static final int H_SPACING = 8;
-    private static final int V_SPACING = 8;
+    private FakeGUIPlayer[] generalPlayers = new FakeGUIPlayer[0];
+    private FakeGUIPlayer[] translatorPlayers = new FakeGUIPlayer[0];
 
     public WildfireCreditsScreen() {
-
         Map<UUID, Contributor> map = Contributors.getContributors();
+
         List<FakeGUIPlayer> generals = new ArrayList<>();
         List<FakeGUIPlayer> translators = new ArrayList<>();
 
-        List<UUID> orderedGeneral = Arrays.asList(
-                UUID.fromString("23b6feed-2dfe-4f2e-9429-863fd4adb946"),
-                UUID.fromString("70336328-0de7-430e-8cba-2779e2a05ab5"),
-                UUID.fromString("64e57307-72e5-4f43-be9c-181e8e35cc9b"),
-                UUID.fromString("ad8ee68c-0aa1-47f9-b29f-f92fa1ef66dc"),
-                UUID.fromString("3f36f7e9-7459-43fe-87ce-4e8a5d47da80"),
-                UUID.fromString("618a8390-51b1-43b2-a53a-ab72c1bbd8bd"),
-                UUID.fromString("ad3cb52d-524b-41b4-b9d6-b91ec440811d"),
-                UUID.fromString("9a60e979-c890-4b43-a4c0-32d8a9f6b6b9"),
-                UUID.fromString("525b0455-15e9-49b7-b61d-f291e8ee6c5b")
-        );
-
-        Set<UUID> alreadyAdded = new HashSet<>();
-        for (UUID id : orderedGeneral) {
-            Contributor c = map.get(id);
-            if (c == null || !Boolean.TRUE.equals(c.showInCredits())) continue;
-            if (c.getRole() == Contributor.Role.TRANSLATOR) continue;
-            generals.add(new FakeGUIPlayer(c.name(), id));
-            alreadyAdded.add(id);
-        }
-
-        for (Entry<UUID, Contributor> e : map.entrySet()) {
-            UUID id = e.getKey();
-            if (alreadyAdded.contains(id)) continue;
-            Contributor c = e.getValue();
-            if (c == null || !Boolean.TRUE.equals(c.showInCredits())) continue;
-            if (c.getRole() == Contributor.Role.TRANSLATOR) continue;
-            generals.add(new FakeGUIPlayer(c.name(), id));
-        }
-
-        List<UUID> orderedTranslators = Arrays.asList(
-                UUID.fromString("8fb5e95d-7f41-4b4c-b8c5-4f15ea3fa2c1"),
-                UUID.fromString("4c3e3225-aec0-499c-b563-2b17cdb017f8"),
-                UUID.fromString("33feda66-c706-4725-8983-f62e5e6cbee7"),
-                UUID.fromString("e31edb15-d8bd-44ac-8ec3-b54114e9d595"),
-                UUID.fromString("242c1a3a-83ee-4aa6-a3de-568cdac082a4")
-        );
-
-        Set<UUID> transAlready = new HashSet<>();
-        for (UUID id : orderedTranslators) {
-            Contributor c = map.get(id);
-            if (c == null || !Boolean.TRUE.equals(c.showInCredits())) continue;
-            if (c.getRole() != Contributor.Role.TRANSLATOR) continue;
-            translators.add(new FakeGUIPlayer(c.name(), id));
-            transAlready.add(id);
-        }
-
-        for (Entry<UUID, Contributor> e : map.entrySet()) {
-            UUID id = e.getKey();
-            if (transAlready.contains(id)) continue;
-            Contributor c = e.getValue();
+        for (Map.Entry<UUID, Contributor> entry : map.entrySet()) {
+            Contributor c = entry.getValue();
             if (c == null || !Boolean.TRUE.equals(c.showInCredits())) continue;
             if (c.getRole() == Contributor.Role.TRANSLATOR) {
-                translators.add(new FakeGUIPlayer(c.name(), id));
+                translators.add(new FakeGUIPlayer(c.name(), entry.getKey()));
+            } else {
+                generals.add(new FakeGUIPlayer(c.name(), entry.getKey()));
             }
         }
 
-        genPlayers = generals.toArray(new FakeGUIPlayer[0]);
-        transPlayers = translators.toArray(new FakeGUIPlayer[0]);
+        // Sort by role priority then by name
+        Collections.sort(generals, (a, b) -> {
+            Contributor ca = Contributors.getContributors().get(a.getUUID());
+            Contributor cb = Contributors.getContributors().get(b.getUUID());
+            if (ca == null || cb == null) return 0;
+            int roleCmp = Integer.compare(ca.getRole().ordinal(), cb.getRole().ordinal());
+            if (roleCmp != 0) return roleCmp;
+            return a.getName().compareToIgnoreCase(b.getName());
+        });
+
+        Collections.sort(translators, (a, b) -> a.getName().compareToIgnoreCase(b.getName()));
+
+        this.generalPlayers = generals.toArray(new FakeGUIPlayer[0]);
+        this.translatorPlayers = translators.toArray(new FakeGUIPlayer[0]);
     }
 
     @Override
@@ -172,7 +135,7 @@ public class WildfireCreditsScreen extends GuiScreen {
     }
 
     private FakeGUIPlayer[] getActivePlayers() {
-        return categoryTab == Category.TRANSLATORS ? transPlayers : genPlayers;
+        return categoryTab == Category.TRANSLATORS ? translatorPlayers : generalPlayers;
     }
 
     private int getTotalPages() {
@@ -316,21 +279,10 @@ public class WildfireCreditsScreen extends GuiScreen {
                 int roleColor = 0xFFFFFF;
 
                 if (found != null) {
-                    UUID id = fp.getUUID();
-                    if (id != null) {
-                        String idStr = id.toString();
-                        if (idStr.equals("70336328-0de7-430e-8cba-2779e2a05ab5")) {
-                            roleText = "Maintainer (Fabric)";
-                        } else if (idStr.equals("64e57307-72e5-4f43-be9c-181e8e35cc9b")) {
-                            roleText = "Maintainer (NeoForge)";
-                        } else {
-                            try {
-                                roleText = StatCollector.translateToLocal(found.getRole().shortNameKey());
-                            } catch (Throwable ignored) {}
-                        }
-                    }
-
                     roleColor = found.getColor();
+                    try {
+                        roleText = StatCollector.translateToLocal(found.getRole().shortNameKey());
+                    } catch (Throwable ignored) {}
 
                     if (found.getDescription() != null && !found.getDescription().isEmpty()) {
                         tooltip.add(Contributor.getLegacyColorCode(roleColor) + found.getDescription());
