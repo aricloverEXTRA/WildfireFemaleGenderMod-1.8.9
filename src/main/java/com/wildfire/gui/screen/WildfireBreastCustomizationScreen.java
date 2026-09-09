@@ -411,8 +411,8 @@ public class WildfireBreastCustomizationScreen extends GuiScreen implements GuiS
         }
         super.drawScreen(mouseX, mouseY, partialTicks);
 
-        int posX = guiLeft + 44;
-        int posY = guiTop + 100;
+        int posX = this.width / 2 - 90;
+        int posY = this.height / 2 + 44;
         int scissorX = (posX - 38) * this.mc.displayWidth / this.width;
         int scissorY = this.mc.displayHeight - (posY + 24 - 48) * this.mc.displayHeight / this.height;
         int scissorWidth = 76 * this.mc.displayWidth / this.width;

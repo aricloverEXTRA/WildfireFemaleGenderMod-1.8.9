@@ -129,8 +129,8 @@ public class WardrobeBrowserScreen extends GuiScreen {
         super.drawScreen(mouseX, mouseY, partialTicks);
 
         EntityLivingBase entity = this.mc.thePlayer;
-        int posX = guiLeft + 44;
-        int posY = guiTop + 95;
+        int posX = this.width / 2 - 90;
+        int posY = this.height / 2 + 18;
         int scissorX = (posX - 38) * this.mc.displayWidth / this.width;
         int scissorY = this.mc.displayHeight - (posY + 24 - 48) * this.mc.displayHeight / this.height;
         int scissorWidth = 76 * this.mc.displayWidth / this.width;
