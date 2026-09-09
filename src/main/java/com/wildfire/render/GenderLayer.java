@@ -15,7 +15,6 @@ import com.wildfire.main.ArmorTextureHelper;
 import com.wildfire.main.WildfireHelper;
 import com.wildfire.physics.BreastPhysics;
 import net.minecraft.client.entity.AbstractClientPlayer;
-import net.minecraft.client.entity.EnumPlayerModelParts;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -209,7 +208,7 @@ public class GenderLayer implements LayerRenderer<AbstractClientPlayer> {
             
             boolean showJacket = true;
             try {
-                showJacket = player.isWearing(net.minecraft.client.entity.AbstractClientPlayer.EnumPlayerModelParts.JACKET);
+                showJacket = player.isWearing(net.minecraft.client.entity.EnumPlayerModelParts.JACKET);
             } catch (Throwable ignored) {}
             
             GlStateManager.enablePolygonOffset();

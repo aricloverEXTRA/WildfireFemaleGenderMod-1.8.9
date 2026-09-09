@@ -2,7 +2,7 @@ package com.wildfire.gui;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
-import net.minecraft.entity.player.EnumPlayerModelParts;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
@@ -21,7 +21,7 @@ public class EntityCreditsPlayer extends EntityOtherPlayerMP {
     }
 
     @Override
-    public boolean isWearing(EnumPlayerModelParts part) {
+    public boolean isWearing(AbstractClientPlayer.EnumPlayerModelParts part) {
         return true;
     }
 
