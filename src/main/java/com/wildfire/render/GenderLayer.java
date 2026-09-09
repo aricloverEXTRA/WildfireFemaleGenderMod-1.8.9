@@ -206,6 +206,11 @@ public class GenderLayer implements LayerRenderer<AbstractClientPlayer> {
             float boxX = isLeft ? -4f : 0f;
             boolean useArmorTex = isChestplate && armor != null && armor.coversBreasts();
             
+            boolean showJacket = true;
+            try {
+                showJacket = player.isWearing(net.minecraft.client.entity.AbstractClientPlayer.EnumPlayerModelParts.JACKET);
+            } catch (Throwable ignored) {}
+            
             GlStateManager.enablePolygonOffset();
             GlStateManager.doPolygonOffset(1.0f, 1.0f);
             
@@ -216,17 +221,21 @@ public class GenderLayer implements LayerRenderer<AbstractClientPlayer> {
                 } else {
                     renderBox(player, baseUV, boxX, 0f, 0f, 4, 5, 3, 0f, false, renderScale, false, chest, isLeft);
                 }
-                ResourceLocation overlayArmor = ArmorTextureHelper.getArmorTextureForPlayer(player, true);
-                if (overlayArmor != null && !overlayArmor.equals(baseArmor)) {
-                    GlStateManager.translate(0, 0, -0.015f);
-                    GlStateManager.scale(1.05f, 1.05f, 1.05f);
-                    renderBox(player, overlayUV, boxX, 0f, 0f, 4, 5, 3, 0f, true, renderScale, true, chest, isLeft);
+                if (showJacket) {
+                    ResourceLocation overlayArmor = ArmorTextureHelper.getArmorTextureForPlayer(player, true);
+                    if (overlayArmor != null && !overlayArmor.equals(baseArmor)) {
+                        GlStateManager.translate(0, 0, -0.015f);
+                        GlStateManager.scale(1.05f, 1.05f, 1.05f);
+                        renderBox(player, overlayUV, boxX, 0f, 0f, 4, 5, 3, 0f, true, renderScale, true, chest, isLeft);
+                    }
                 }
             } else {
                 renderBox(player, baseUV, boxX, 0f, 0f, 4, 5, 3, 0f, false, renderScale, false, chest, isLeft);
-                GlStateManager.translate(0, 0, -0.015f);
-                GlStateManager.scale(1.05f, 1.05f, 1.05f);
-                renderBox(player, overlayUV, boxX, 0f, 0f, 4, 5, 3, 0f, true, renderScale, false, null, isLeft);
+                if (showJacket) {
+                    GlStateManager.translate(0, 0, -0.015f);
+                    GlStateManager.scale(1.05f, 1.05f, 1.05f);
+                    renderBox(player, overlayUV, boxX, 0f, 0f, 4, 5, 3, 0f, true, renderScale, false, null, isLeft);
+                }
             }
             
             GlStateManager.disablePolygonOffset();
